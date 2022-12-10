@@ -311,7 +311,10 @@ class Rows {
     this.cantidad = { type: Number, value: rows[11] };
     this.iva = { type: Number, value: 0 };
     this.valorUnitario = { type: Number, value: rows[13] };
-    this.descuento = { type: Number, value: rows[18] / (rows[11] * rows[13]) };
+    this.descuento = {
+      type: Number,
+      value: (rows[18] / (rows[11] * rows[13])) * 100,
+    };
     this.fechaVencimiento = { type: String, value: rows[4] };
     this.detalleNota = { type: String, value: null };
     this.centroCostos = {
