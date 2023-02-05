@@ -2,239 +2,120 @@ const archiveInput = document.querySelector(".form__archive");
 
 archiveInput.addEventListener("change", async () => {
   const response = await readXlsxFile(archiveInput.files[0]);
-  const nameArchive = archiveInput.files[0].name;
-  const list = nameArchive.split(" ");
-  const woName = `ARCHIVO WO ${list[1]} ${list[2]} ${list[3]} ${
-    list[list.length - 1].split(".")[0]
+  const nameArchiveRead = archiveInput.files[0].name;
+  const name = nameArchiveRead.split(" ");
+  const woName = `ARCHIVO WO ${name[0]} ${name[2]} ${name[3]} ${
+    name[4].split(".")[0]
   }`;
-  const excel = new Excel(response).getRow();
+  console.log(response, woName);
+  const excel = new Excel(response, name).getRow();
   excel.unshift([
     {
-      value: "Encab: Empresa",
+      value: "TipoDoc",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Tipo Documento",
+      value: "NumDoc",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Prefijo",
+      value: "FerchaElaboracion",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Documento Número",
+      value: "siglaMoneda",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Fecha",
+      value: "tasaDeCambio",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Tercero Interno",
+      value: "vCuentaContable",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Tercero Externo",
+      value: "vNit",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Nota",
+      value: "Sucursal",
       fontWeight: "bold",
     },
     {
-      value: "Encab: FormaPago",
+      value: "CodProducto",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Fecha Entrega",
+      value: "Bodega",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Prefijo Documento Externo",
+      value: "Accion",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Número_Documento_Externo",
+      value: "CantidadProducto",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Verificado",
+      value: "Prefijo",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Anulado",
+      value: "Consecutivo",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 1",
+      value: "NumCuota",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 2",
+      value: "FechaVencimiento",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 3",
+      value: "CodImpuesto",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 4",
+      value: "CodGrupoActivoFijo",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 5",
+      value: "CodActivoFijo",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 6",
+      value: "Descripicion",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 7",
+      value: "CodSubCentroCostos",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 8",
+      value: "Debito",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 9",
+      value: "Credito",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 10",
+      value: "Observaciones",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 11",
+      value: "BaseGravable",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 12",
+      value: "BaseExcenta",
       fontWeight: "bold",
     },
     {
-      value: "Encab: Personalizado 13",
-      fontWeight: "bold",
-    },
-    {
-      value: "Encab: Personalizado 14",
-      fontWeight: "bold",
-    },
-    {
-      value: "Encab: Personalizado 15",
-      fontWeight: "bold",
-    },
-    {
-      value: "Encab: Sucursal",
-      fontWeight: "bold",
-    },
-    {
-      value: "Encab: Clasificación",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Producto",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Bodega",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: UnidadDeMedida",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Cantidad",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: IVA",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Valor Unitario",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Descuento",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Vencimiento",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Nota",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Centro costos",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado1",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado2",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado3",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado4",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado5",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado6",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado7",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado8",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado9",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado10",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado11",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado12",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado13",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado14",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Personalizado15",
-      fontWeight: "bold",
-    },
-    {
-      value: "Detalle: Código Centro Costos",
+      value: "MesCierre",
       fontWeight: "bold",
     },
   ]);
@@ -244,149 +125,158 @@ archiveInput.addEventListener("change", async () => {
 });
 
 class Excel {
-  constructor(archive) {
+  constructor(archive, name) {
     this.archive = archive;
+    this.archiveName = name[0];
   }
 
   getRow() {
     let rows = [];
-    let anterior;
     for (let i = 1; i < this.archive.length; i++) {
-      let actual = Object.values(new Rows(this.archive[i]));
-      if (actual[8].value === "Vacío") {
-        actual[8].value = anterior[8].value;
-      }
-      rows.push(actual);
-      anterior = actual;
+      rows.push(Object.values(new Rows(this.archive[i], this.archiveName)));
     }
     return rows;
   }
 }
 
 class Rows {
-  constructor(rows) {
-    this.empresa = { type: String, value: rows[0] };
-    this.tipoDocumento = { type: String, value: "FV" };
-    this.prefijo = { type: String, value: rows[2] };
-    this.documentoNumero = { type: Number, value: rows[3] };
-    this.fecha = { type: String, value: rows[4] };
-    this.terceroInterno = {
-      type: Number,
-      value: this.validationVendedor(rows[2]),
-    };
-    this.terceroExterno = { type: Number, value: 222222222 };
-    this.nota = { type: String, value: "Factura de Venta" };
-    this.formaPago = {
+  constructor(rows, archiveName) {
+    this.tipoDoc = { type: String, value: "FV" };
+    this.numDoc = { type: Number, value: rows[1] };
+    this.fechaElaboracion = { type: String, value: rows[2] };
+    this.siglaMoneda = { type: String, value: null };
+    this.tasaDeCambio = { type: String, value: null };
+    this.vCuentaContable = {
       type: String,
-      value: this.validationFormaPago(rows[9], rows[2]),
+      value: this.validationCuentaContable(rows[19], archiveName, rows[5]),
     };
-    this.fechaEntrega = { type: String, value: rows[4] };
-    this.prefijoDocumentoExterno = { type: String, value: null };
-    this.numeroDocumentoExterno = { type: String, value: null };
-    this.verificado = { type: Number, value: -1 };
-    this.anulado = { type: Number, value: 0 };
-    this.presonalizado1 = { type: String, value: null };
-    this.presonalizado2 = { type: String, value: null };
-    this.presonalizado3 = { type: String, value: null };
-    this.presonalizado4 = { type: String, value: null };
-    this.presonalizado5 = { type: String, value: null };
-    this.presonalizado6 = { type: String, value: null };
-    this.presonalizado7 = { type: String, value: null };
-    this.presonalizado8 = { type: String, value: null };
-    this.presonalizado9 = { type: String, value: null };
-    this.presonalizado10 = { type: String, value: null };
-    this.presonalizado11 = { type: String, value: null };
-    this.presonalizado12 = { type: String, value: null };
-    this.presonalizado13 = { type: String, value: null };
-    this.presonalizado14 = { type: String, value: null };
-    this.presonalizado15 = { type: String, value: null };
-    this.surcursal = { type: String, value: null };
-    this.clasificacion = { type: String, value: null };
-    this.dettaleProducto = {
+    this.vNit = { type: Number, value: 222222222 };
+    this.sucursal = { type: String, value: null };
+    this.codProducto = { type: String, value: rows[8] };
+    this.bodega = { type: String, value: null };
+    this.accion = { type: String, value: null };
+    this.cantidadProducto = { type: String, value: rows[11] };
+    this.prefijo = { type: String, value: null };
+    this.consecutivo = { type: String, value: null };
+    this.numCuota = { type: String, value: null };
+    this.fechaVencimiento = { type: String, value: null };
+    this.codImpuesto = { type: String, value: rows[16] };
+    this.codGrupoActivoFijo = { type: String, value: null };
+    this.codActivoFijo = { type: String, value: null };
+    this.descripcion = {
       type: String,
-      value: rows[10] === "Rappi Valor Variable" ? "PT298" : rows[10],
+      value: this.validationDescripcion(rows[19], archiveName),
     };
-    this.bodega = { type: String, value: "LUISA POSTRES" };
-    this.unidadDeMedida = { type: String, value: "Und." };
-    this.cantidad = { type: Number, value: rows[11] };
-    this.iva = { type: Number, value: 0 };
-    this.valorUnitario = { type: Number, value: rows[13] };
-    this.descuento = {
-      type: Number,
-      value: (rows[18] / (rows[11] * rows[13])) * 100,
-    };
-    this.fechaVencimiento = { type: String, value: rows[4] };
-    this.detalleNota = { type: String, value: null };
-    this.centroCostos = {
-      type: String,
-      value: this.validationCentroCostos(rows[2]),
-    };
-    this.detallePer1 = { type: String, value: null };
-    this.detallePer2 = { type: String, value: null };
-    this.detallePer3 = { type: String, value: null };
-    this.detallePer4 = { type: String, value: null };
-    this.detallePer5 = { type: String, value: null };
-    this.detallePer6 = { type: String, value: null };
-    this.detallePer7 = { type: String, value: null };
-    this.detallePer8 = { type: String, value: null };
-    this.detallePer9 = { type: String, value: null };
-    this.detallePer10 = { type: String, value: null };
-    this.detallePer11 = { type: String, value: null };
-    this.detallePer12 = { type: String, value: null };
-    this.detallePer13 = { type: String, value: null };
-    this.detallePer14 = { type: String, value: null };
-    this.detallePer15 = { type: String, value: null };
-    this.codCentroCostos = { type: String, value: null };
+    this.codSubCentrocostos = { type: String, value: null };
+    this.debito = { type: Number, value: rows[21] };
+    this.credito = { type: Number, value: rows[22] };
+    this.observaciones = { type: String, value: null };
+    this.baseGravable = { type: String, value: null };
+    this.baseExcenta = { type: String, value: null };
+    this.mesCierre = { type: String, value: null };
   }
-  getFormaPago() {
-    return this.formaPago;
-  }
-  setFormaPago(formaPago) {
-    this.formaPago = formaPago;
-  }
-  validationFormaPago(element, prefijo) {
-    if (element === "TCREDITO" || element === "TDEBITO") {
-      return "Link de pago bold";
-    } else if (element === "EFECTIVO CAJA") {
-      return "Contado";
-    } else if (element === "CUENTAS x COBRAR") {
-      return "RAPPI";
-    } else if (element === "OTROS") {
-      if (prefijo === "CH") {
-        return "Bancolombia 1663 Chia";
-      } else if (prefijo === "FIM") {
-        return "Bancolombia 1664 Salvio";
-      } else if (prefijo === "TB") {
-        return "Bancolombia 1450";
+  validationDescripcion(descripcion, archiveName) {
+    if (descripcion === "TCREDITO" || descripcion === "TDEBITO") {
+      if (archiveName === "CHIA") {
+        return "Bold";
+      } else {
+        return "Credibanco";
       }
+    } else if (descripcion === "DAVIVIENDA 3959") {
+      return "Davivienda 3959";
+    } else if (descripcion === "WOMPI") {
+      return "Wompi";
+    } else if (descripcion === "Transferencia bancar") {
+      switch (archiveName) {
+        case "CHIA":
+          return "Bancolombia 1663 Chia";
+        case "TIENDA":
+          return "Bancolombia 1450 Tienda";
+        case "SALVIO":
+          return "Bancolombia Salvio 1664";
+        case "ACOPIO":
+          return "Bancolombia Ahorros 17800019397";
+      }
+    } else if (descripcion === "EFECTIVO CAJA") {
+      switch (archiveName) {
+        case "CHIA":
+          return "Caja General Chia";
+        case "TIENDA":
+          return "Caja General Tienda";
+        case "SALVIO":
+          return "Caja General Salvio";
+        case "P127":
+          return "Caja General P127";
+        case "ACOPIO":
+          return "Caja General Planta";
+      }
+    } else if (descripcion === "PROPINA") {
+      switch (archiveName) {
+        case "CHIA":
+          return "Propinas";
+        case "TIENDA":
+          return "Propinas";
+        case "ACOPIO":
+          return "Domicilios";
+      }
+    } else if (descripcion === "DOMICILIOS: DOMICILIO") {
+      return "Domicilios";
+    } else if (descripcion === "CxC RAPPI") {
+      return "Rappi";
     } else {
-      return "Vacío";
+      return descripcion;
     }
   }
-  validationCentroCostos(prefijo) {
-    if (prefijo === "CH") {
-      return "Chia";
-    } else if (prefijo === "FIM") {
-      return "Salvio";
-    } else if (prefijo === "TB") {
-      return "Tienda";
-    } else if (prefijo === "P127") {
-      return "127";
+  validationCuentaContable(descripcion, archiveName, defaultValue) {
+    if (descripcion === "TCREDITO" || descripcion === "TDEBITO") {
+      if (archiveName === "CHIA") {
+        return "13359004";
+      } else {
+        return "13359003";
+      }
+    } else if (descripcion === "DAVIVIENDA 3959") {
+      return "11200505";
+    } else if (descripcion === "WOMPI") {
+      return "13359002";
+    } else if (descripcion === "Transferencia bancar") {
+      switch (archiveName) {
+        case "CHIA":
+          return "11200503";
+        case "TIENDA":
+          return "11200502";
+        case "SALVIO":
+          return "11200504";
+        case "ACOPIO":
+          return "11200501";
+      }
+    } else if (descripcion === "EFECTIVO CAJA") {
+      switch (archiveName) {
+        case "CHIA":
+          return "11050504";
+        case "TIENDA":
+          return "11050503";
+        case "SALVIO":
+          return "11050505";
+        case "P127":
+          return "11050506";
+        case "ACOPIO":
+          return "11050502";
+      }
+    } else if (descripcion === "PROPINA") {
+      switch (archiveName) {
+        case "CHIA":
+          return "28150502";
+        case "TIENDA":
+          return "28150502";
+        case "ACOPIO":
+          return "28150503";
+      }
+    } else if (descripcion === "DOMICILIOS: DOMICILIO") {
+      return "Domicilios";
+    } else if (descripcion === "CxC RAPPI") {
+      return "13359001";
     } else {
-      return "Planta";
-    }
-  }
-  validationVendedor(prefijo) {
-    if (prefijo === "CH") {
-      return 52267032;
-    } else if (prefijo === "FIM") {
-      return 1069505011;
-    } else if (prefijo === "TB") {
-      return 1094902055;
-    } else if (prefijo === "P127") {
-      return 39678885;
-    } else {
-      return 1000236135;
+      return defaultValue;
     }
   }
 }
