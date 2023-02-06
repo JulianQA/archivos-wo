@@ -7,7 +7,6 @@ archiveInput.addEventListener("change", async () => {
   const woName = `ARCHIVO WO ${name[0]} ${name[2]} ${name[3]} ${
     name[4].split(".")[0]
   }`;
-  console.log(response, woName);
   const excel = new Excel(response, name).getRow();
   excel.unshift([
     {
@@ -148,7 +147,11 @@ class Rows {
     this.tasaDeCambio = { type: String, value: null };
     this.vCuentaContable = {
       type: String,
-      value: this.validationCuentaContable(rows[19], archiveName, rows[5]),
+      value: this.validation(
+        rows[19],
+        archiveName,
+        rows[5] == null ? " " : rows[5]
+      ),
     };
     this.vNit = { type: Number, value: 222222222 };
     this.sucursal = { type: String, value: null };
@@ -165,7 +168,7 @@ class Rows {
     this.codActivoFijo = { type: String, value: null };
     this.descripcion = {
       type: String,
-      value: this.validationDescripcion(rows[19], archiveName),
+      value: this.validation(rows[19], archiveName),
     };
     this.codSubCentrocostos = { type: String, value: null };
     this.debito = { type: Number, value: rows[21] };
@@ -175,108 +178,56 @@ class Rows {
     this.baseExcenta = { type: String, value: null };
     this.mesCierre = { type: String, value: null };
   }
-  validationDescripcion(descripcion, archiveName) {
+  validation(descripcion, archiveName, defaultValue = undefined) {
     if (descripcion === "TCREDITO" || descripcion === "TDEBITO") {
       if (archiveName === "CHIA") {
-        return "Bold";
+        return defaultValue ? "13359004" : "Bold";
       } else {
-        return "Credibanco";
+        return defaultValue ? "13359003" : "Credibanco";
       }
     } else if (descripcion === "DAVIVIENDA 3959") {
-      return "Davivienda 3959";
+      return defaultValue ? "11200505" : "Davivienda 3959";
     } else if (descripcion === "WOMPI") {
-      return "Wompi";
+      return defaultValue ? "13359002" : "Wompi";
     } else if (descripcion === "Transferencia bancar") {
       switch (archiveName) {
         case "CHIA":
-          return "Bancolombia 1663 Chia";
+          return defaultValue ? "11200503" : "Bancolombia 1663 Chia";
         case "TIENDA":
-          return "Bancolombia 1450 Tienda";
+          return defaultValue ? "11200502" : "Bancolombia 1450 Tienda";
         case "SALVIO":
-          return "Bancolombia Salvio 1664";
+          return defaultValue ? "11200504" : "Bancolombia Salvio 1664";
         case "ACOPIO":
-          return "Bancolombia Ahorros 17800019397";
+          return defaultValue ? "11200501" : "Bancolombia Ahorros 17800019397";
       }
     } else if (descripcion === "EFECTIVO CAJA") {
       switch (archiveName) {
         case "CHIA":
-          return "Caja General Chia";
+          return defaultValue ? "11050504" : "Caja General Chia";
         case "TIENDA":
-          return "Caja General Tienda";
+          return defaultValue ? "11050503" : "Caja General Tienda";
         case "SALVIO":
-          return "Caja General Salvio";
+          return defaultValue ? "11050505" : "Caja General Salvio";
         case "P127":
-          return "Caja General P127";
+          return defaultValue ? "11050506" : "Caja General P127";
         case "ACOPIO":
-          return "Caja General Planta";
+          return defaultValue ? "11050502" : "Caja General Planta";
       }
     } else if (descripcion === "PROPINA") {
       switch (archiveName) {
         case "CHIA":
-          return "Propinas";
+          return defaultValue ? "28150502" : "Propinas";
         case "TIENDA":
-          return "Propinas";
+          return defaultValue ? "28150502" : "Propinas";
         case "ACOPIO":
-          return "Domicilios";
+          return defaultValue ? "28150503" : "Domicilios";
       }
     } else if (descripcion === "DOMICILIOS: DOMICILIO") {
-      return "Domicilios";
+      return defaultValue ? "28150503" : "Domicilios";
     } else if (descripcion === "CxC RAPPI") {
-      return "Rappi";
+      return defaultValue ? "13359001" : "Rappi";
     } else {
-      return descripcion;
-    }
-  }
-  validationCuentaContable(descripcion, archiveName, defaultValue) {
-    if (descripcion === "TCREDITO" || descripcion === "TDEBITO") {
-      if (archiveName === "CHIA") {
-        return "13359004";
-      } else {
-        return "13359003";
-      }
-    } else if (descripcion === "DAVIVIENDA 3959") {
-      return "11200505";
-    } else if (descripcion === "WOMPI") {
-      return "13359002";
-    } else if (descripcion === "Transferencia bancar") {
-      switch (archiveName) {
-        case "CHIA":
-          return "11200503";
-        case "TIENDA":
-          return "11200502";
-        case "SALVIO":
-          return "11200504";
-        case "ACOPIO":
-          return "11200501";
-      }
-    } else if (descripcion === "EFECTIVO CAJA") {
-      switch (archiveName) {
-        case "CHIA":
-          return "11050504";
-        case "TIENDA":
-          return "11050503";
-        case "SALVIO":
-          return "11050505";
-        case "P127":
-          return "11050506";
-        case "ACOPIO":
-          return "11050502";
-      }
-    } else if (descripcion === "PROPINA") {
-      switch (archiveName) {
-        case "CHIA":
-          return "28150502";
-        case "TIENDA":
-          return "28150502";
-        case "ACOPIO":
-          return "28150503";
-      }
-    } else if (descripcion === "DOMICILIOS: DOMICILIO") {
-      return "Domicilios";
-    } else if (descripcion === "CxC RAPPI") {
-      return "13359001";
-    } else {
-      return defaultValue;
+      return defaultValue ? defaultValue : descripcion;
     }
   }
 }
