@@ -226,6 +226,10 @@ class Rows {
       return defaultValue ? "28150503" : "Domicilios";
     } else if (descripcion === "CxC RAPPI") {
       return defaultValue ? "13359001" : "Rappi";
+    } else if (descripcion === "CxC CLIENTES") {
+      return defaultValue ? "13050501" : "Cartera";
+    } else if (descripcion === "DESCUENTOS Y CORTESIAS") {
+      return defaultValue ? "41400101" : "Descuentos";
     } else {
       return defaultValue ? defaultValue : descripcion;
     }
