@@ -140,7 +140,7 @@ class Excel {
 
 class Rows {
   constructor(rows, archiveName) {
-    this.tipoDoc = { type: String, value: "FV" };
+    this.tipoDoc = { type: String, value: rows[0] };
     this.numDoc = { type: Number, value: rows[1] };
     this.fechaElaboracion = { type: String, value: rows[2] };
     this.siglaMoneda = { type: String, value: null };
@@ -170,7 +170,10 @@ class Rows {
       type: String,
       value: this.validation(rows[19], archiveName),
     };
-    this.codSubCentrocostos = { type: String, value: null };
+    this.codSubCentroCostos = {
+      type: String,
+      value: this.validationCentroConstos(archiveName),
+    };
     this.debito = { type: Number, value: rows[21] };
     this.credito = { type: Number, value: rows[22] };
     this.observaciones = { type: String, value: null };
@@ -189,7 +192,7 @@ class Rows {
       return defaultValue ? "11200505" : "Davivienda 3959";
     } else if (descripcion === "WOMPI") {
       return defaultValue ? "13359002" : "Wompi";
-    } else if (descripcion === "Transferencia bancar") {
+    } else if (descripcion === "Transferencia bancar" || descripcion === "QR") {
       switch (archiveName) {
         case "CHIA":
           return defaultValue ? "11200503" : "Bancolombia 1663 Chia";
@@ -232,6 +235,19 @@ class Rows {
       return defaultValue ? "41400101" : "Descuentos";
     } else {
       return defaultValue ? defaultValue : descripcion;
+    }
+  }
+
+  validationCentroConstos(archiveName) {
+    switch (archiveName) {
+      case "ACOPIO":
+        return "62490-2";
+      case "SALVIO":
+        return "62404-1";
+      case "TIENDA":
+        return "62401-1";
+      case "P127":
+        return "62403-1";
     }
   }
 }
