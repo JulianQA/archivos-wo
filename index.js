@@ -153,7 +153,7 @@ class Rows {
         rows[5] == null ? " " : rows[5]
       ),
     };
-    this.vNit = { type: Number, value: 222222222 };
+    this.vNit = { type: String, value: rows[6].toString() };
     this.sucursal = { type: String, value: null };
     this.codProducto = { type: String, value: rows[8] };
     this.bodega = { type: String, value: null };
