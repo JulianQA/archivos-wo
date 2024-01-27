@@ -18,7 +18,7 @@ archiveInput.addEventListener("change", async () => {
       fontWeight: "bold",
     },
     {
-      value: "FerchaElaboracion",
+      value: "FechaElaboracion",
       fontWeight: "bold",
     },
     {
@@ -140,18 +140,17 @@ class Excel {
 
 class Rows {
   constructor(rows, archiveName) {
-    this.tipoDoc = { type: String, value: rows[0] };
+    this.tipoDoc = {
+      type: String,
+      value: validationTipoDoc(rows[0], rows[1], rows[20]),
+    };
     this.numDoc = { type: Number, value: rows[1] };
     this.fechaElaboracion = { type: String, value: rows[2] };
     this.siglaMoneda = { type: String, value: null };
     this.tasaDeCambio = { type: String, value: null };
     this.vCuentaContable = {
       type: String,
-      value: this.validation(
-        rows[19],
-        archiveName,
-        rows[5] == null ? " " : rows[5]
-      ),
+      value: this.validation(rows[19], archiveName),
     };
     this.vNit = { type: String, value: rows[6].toString() };
     this.sucursal = { type: String, value: null };
@@ -163,7 +162,10 @@ class Rows {
     this.consecutivo = { type: String, value: null };
     this.numCuota = { type: String, value: null };
     this.fechaVencimiento = { type: String, value: null };
-    this.codImpuesto = { type: String, value: rows[16] };
+    this.codImpuesto = {
+      type: String,
+      value: validationImpuesto(rows[16], rows[19]),
+    };
     this.codGrupoActivoFijo = { type: String, value: null };
     this.codActivoFijo = { type: String, value: null };
     this.descripcion = {
@@ -172,7 +174,7 @@ class Rows {
     };
     this.codSubCentroCostos = {
       type: String,
-      value: this.validationCentroConstos(archiveName),
+      value: rows[20],
     };
     this.debito = { type: Number, value: rows[21] };
     this.credito = { type: Number, value: rows[22] };
@@ -181,73 +183,89 @@ class Rows {
     this.baseExcenta = { type: String, value: null };
     this.mesCierre = { type: String, value: null };
   }
-  validation(descripcion, archiveName, defaultValue = undefined) {
+
+  validation(descripcion, archiveName) {
     if (descripcion === "TCREDITO" || descripcion === "TDEBITO") {
       if (archiveName === "CHIA") {
-        return defaultValue ? "13359004" : "Bold";
+        return "13359004";
       } else {
-        return defaultValue ? "13359003" : "Credibanco";
+        return "13359003";
       }
     } else if (descripcion === "DAVIVIENDA 3959") {
-      return defaultValue ? "11200505" : "Davivienda 3959";
+      return "11200505";
     } else if (descripcion === "WOMPI") {
-      return defaultValue ? "13359002" : "Wompi";
+      return "13359002";
     } else if (descripcion === "Transferencia bancar" || descripcion === "QR") {
       switch (archiveName) {
         case "CHIA":
-          return defaultValue ? "11200503" : "Bancolombia 1663 Chia";
+          return "11200503";
         case "TIENDA":
-          return defaultValue ? "11200502" : "Bancolombia 1450 Tienda";
+          return "11200502";
         case "SALVIO":
-          return defaultValue ? "11200504" : "Bancolombia Salvio 1664";
+          return "11200504";
         case "ACOPIO":
-          return defaultValue ? "11200501" : "Bancolombia Ahorros 17800019397";
+          return "11200501";
       }
     } else if (descripcion === "EFECTIVO CAJA") {
       switch (archiveName) {
         case "CHIA":
-          return defaultValue ? "11050504" : "Caja General Chia";
+          return "11050504";
         case "TIENDA":
-          return defaultValue ? "11050503" : "Caja General Tienda";
+          return "11050503";
         case "SALVIO":
-          return defaultValue ? "11050505" : "Caja General Salvio";
+          return "11050505";
         case "P127":
-          return defaultValue ? "11050506" : "Caja General P127";
+          return "11050506";
         case "ACOPIO":
-          return defaultValue ? "11050502" : "Caja General Planta";
+          return "11050502";
       }
     } else if (descripcion === "PROPINA") {
       switch (archiveName) {
         case "CHIA":
-          return defaultValue ? "28150502" : "Propinas";
+          return "28150502";
         case "TIENDA":
-          return defaultValue ? "28150502" : "Propinas";
+          return "28150502";
         case "ACOPIO":
-          return defaultValue ? "28150503" : "Domicilios";
+          return "28150503";
       }
     } else if (descripcion === "DOMICILIOS: DOMICILIO") {
-      return defaultValue ? "28150503" : "Domicilios";
+      return "28150503";
     } else if (descripcion === "CxC RAPPI") {
-      return defaultValue ? "13359001" : "Rappi";
-    } else if (descripcion === "CXC CLIENTES") {
-      return defaultValue ? "13050501" : "Cartera";
+      return "13359001";
+    } else if (
+      descripcion === "DEVOLUCION CXC CLIENTES" ||
+      descripcion === "Cartera"
+    ) {
+      return "13050501";
     } else if (descripcion === "DESCUENTOS Y CORTESIAS") {
-      return defaultValue ? "41400101" : "Descuentos";
+      return "41400101";
+    } else if (descripcion === "ICUI") {
+      return "24950301";
     } else {
-      return defaultValue ? defaultValue : descripcion;
+      return descripcio;
     }
   }
 
-  validationCentroConstos(archiveName) {
-    switch (archiveName) {
-      case "ACOPIO":
-        return "62490-2";
-      case "SALVIO":
-        return "62404-1";
-      case "TIENDA":
-        return "62401-1";
-      case "P127":
-        return "62403-1";
+  validationTipoDoc(acc, numDoc, centerCost) {
+    if (numDoc.length === 3) {
+      return "20";
+    } else {
+      if (centerCost === "62490-2") {
+        return "9";
+      } else if (centerCost === "62401-1") {
+        return "10";
+      }
     }
+    return acc;
+  }
+
+  validationImpuesto(impuesto, descripcion) {
+    if (descripcion === "INC 8%" || descripcion === "DEVOLUCION INC 8%") {
+      return "16";
+    } else if (descripcion === "ICUI") {
+      return "33";
+    }
+
+    return impuesto;
   }
 }
