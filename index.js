@@ -142,7 +142,7 @@ class Rows {
   constructor(rows, archiveName) {
     this.tipoDoc = {
       type: String,
-      value: validationTipoDoc(rows[0], rows[1], rows[20]),
+      value: this.validationTipoDoc(rows[0], rows[1], rows[20]),
     };
     this.numDoc = { type: Number, value: rows[1] };
     this.fechaElaboracion = { type: String, value: rows[2] };
@@ -164,7 +164,7 @@ class Rows {
     this.fechaVencimiento = { type: String, value: null };
     this.codImpuesto = {
       type: String,
-      value: validationImpuesto(rows[16], rows[19]),
+      value: this.validationImpuesto(rows[16], rows[19]),
     };
     this.codGrupoActivoFijo = { type: String, value: null };
     this.codActivoFijo = { type: String, value: null };
@@ -242,7 +242,7 @@ class Rows {
     } else if (descripcion === "ICUI") {
       return "24950301";
     } else {
-      return descripcio;
+      return descripcion;
     }
   }
 
